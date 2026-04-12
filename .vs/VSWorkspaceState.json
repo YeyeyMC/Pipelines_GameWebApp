@@ -4,8 +4,9 @@
     "\\public",
     "\\scripts",
     "\\src",
+    "\\src\\assets",
     "\\src\\components"
   ],
-  "SelectedNode": "\\src\\components\\GamePortal.jsx",
+  "SelectedNode": "\\src\\components\\LeaderBoard.jsx",
   "PreviewInSolutionExplorer": false
 }

@@ -4,12 +4,13 @@ import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore"
 import { auth, db } from "./firebase";
 import LoginForm from "./components/LoginForm.jsx"
 import GamePortal from "./components/GamePortal.jsx"
+import View from "./components/View.jsx"
 
 async function createUserProfileIfNeeded(firebaseUser) {
-    const userRef = doc(db, "users", firebaseUser.uid);
+    const userRef = doc(db, 'users', firebaseUser.uid);
     const snapshot = await getDoc(userRef);
 
-    if (!snapshot.exists) {
+    if (!snapshot.exists()) {
         await setDoc(userRef, {
             email: firebaseUser.email,
             displayName: firebaseUser.displayName || "Player",
@@ -50,7 +51,7 @@ export default function App() {
 
     return (
         <div className="app">
-            {user ? <GamePortal user={user} /> : <LoginForm/> }
+            {user ? <View user={user} /> : <LoginForm/> }
         </div>
     )
 }

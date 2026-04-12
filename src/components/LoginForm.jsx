@@ -64,11 +64,11 @@ export default function LoginForm() {
                 <form className="login-form" onSubmit={handleEmailAuth}>
                     <div className="field-group">
                         <label htmlFor="email">Email</label>
-                        <input id="email" type="email" placeholder="spencer@spencer.com" value={email} onChange={(e) => setEmail(e.target.value)} required disabled={loading} />
+                        <input id="email" type="email" placeholder="Email..." value={email} onChange={(e) => setEmail(e.target.value)} required disabled={loading} />
                     </div>
                     <div className="field-group">
                         <label htmlFor="password">Password</label>
-                        <input id="password" type="password" placeholder="min. 6 characters" value={password} onChange={(e) => setPassword(e.target.value)} required disabled={loading} />
+                        <input id="password" type="password" placeholder="Password..." value={password} onChange={(e) => setPassword(e.target.value)} required disabled={loading} />
                     </div>
                     {error && <p className="error-message">{error}</p>}
 

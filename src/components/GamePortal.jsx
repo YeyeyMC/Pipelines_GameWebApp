@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react"
-import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase"
 import { doc, onSnapshot } from "firebase/firestore"
 
 import Leaderboard from "./LeaderBoard";
+import PlayerInformation from "./PlayerInformation.jsx"
+import AdminDashboard from "./AdminDashboard.jsx"
 
 const GAME_URL = import.meta.env.VITE_GAME_URL || null;
 const FIREBASE_PROJECT_ID = import.meta.env.VITE_FIREBASE_PROJECT_ID || "";
@@ -17,6 +18,7 @@ export default function GamePortal({ user }) {
     useEffect(() => {
         const userRef = doc(db, "users", user.uid);
         const unsubscribe = onSnapshot(userRef, (snapshot) => {
+
             if (snapshot.exists()) {
                 setUserData(snapshot.data());
             }
@@ -28,7 +30,6 @@ export default function GamePortal({ user }) {
     const iframeRef = useRef(null);
     const retryTimer = useRef(null);
     const authAcknowledge = useRef(null);
-
 
     const sendAuthToGame = useCallback(async () => {
         if (!iframeRef.current?.contentWindow || !user || authAcknowledge.current) return;
@@ -81,19 +82,10 @@ export default function GamePortal({ user }) {
         }, 30000);
     }, [sendAuthToGame]);
 
-    const handleSignOut = async () => {
-        try {
-            await signOut(auth);
-        } catch (err) {
-            console.log("Sign out error", err);
-        }
-    }
-
+    
     return (
         <>
             <div className="portal-container">
-                <button onClick={handleSignOut} className="btn-signout">Sign Out</button>
-
                 <div className="game-area">
                     <iframe
                         ref={iframeRef}
@@ -102,10 +94,7 @@ export default function GamePortal({ user }) {
                         className={`game-frame ${gameLoaded ? "visible" : "hidden"}`}
                         allow="fullscreen"
                         onLoad={ handleGameLoaded } />
-                        
                 </div>
-
-                <Leaderboard />
             </div>
         </>
     )
