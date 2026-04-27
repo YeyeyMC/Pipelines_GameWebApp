@@ -1,0 +1,68 @@
+name: Deploy React Vite App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Create log file
+        run: |
+          echo "PIPELINE START" > pipeline_log.txt
+          echo "[INFO] Workflow started at: $(date)" >> pipeline_log.txt
+          echo "[INFO] Repository: ${{ github.repository }}" >> pipeline_log.txt
+          echo "[INFO] Branch: ${{ github.ref_name }}" >> pipeline_log.txt
+
+      - name: Install dependencies
+        run: |
+          echo "" >> pipeline_log.txt
+          echo "[INFO] Installing dependencies..." >> pipeline_log.txt
+          npm ci >> pipeline_log.txt 2>&1
+          echo "[SUCCESS] Dependencies installed." >> pipeline_log.txt
+
+      - name: Build project
+        run: |
+          echo "" >> pipeline_log.txt
+          echo "[INFO] Building React/Vite project..." >> pipeline_log.txt
+          npm run build >> pipeline_log.txt 2>&1
+          echo "[SUCCESS] Build completed." >> pipeline_log.txt
+
+      - name: Upload pipeline log file
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-log
+          path: pipeline_log.txt
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
