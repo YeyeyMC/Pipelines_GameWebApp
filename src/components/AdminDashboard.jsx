@@ -1,4 +1,4 @@
-export default function PlayerInformation() {
+export default function AdminDashboard() {
     return (
         <>
             <div className="admin-container">

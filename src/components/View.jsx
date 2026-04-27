@@ -7,6 +7,7 @@ import GamePortal from "./GamePortal.jsx"
 import PlayerInformation from "./PlayerInformation.jsx"
 import Leaderboard from "./LeaderBoard.jsx"
 import AdminDashboard from "./AdminDashboard.jsx"
+import SimpleDashboard from "./SampleDashboard.jsx"
 
 export default function View({ user }) {
     const [userData, setUserData] = useState(null);
@@ -51,7 +52,7 @@ export default function View({ user }) {
         <>
             <button onClick={handleSignOut} className="btn-signout">Sign Out</button>
 
-            {isAdmin ? <AdminDashboard /> : <PlayerInformation userData={userData} />}
+            {isAdmin ? <SimpleDashboard /> : <PlayerInformation userData={userData} />}
             {!isAdmin && <GamePortal user={user} />}
             {!isAdmin && <Leaderboard />}
 		</>
