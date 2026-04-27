@@ -19,6 +19,7 @@ function getPyodide() {
 export default function SimpleDashboard() {
     const [status, setStatus] = useState('Idle');
     const [data, setData] = useState([]);
+    const [scoresData, setScoresData] = useState([]);
 
     useEffect(() => {
         const q = query(collection(db, "users"), orderBy("highScore", "desc"), limit(10))
@@ -34,6 +35,19 @@ export default function SimpleDashboard() {
     }, [])
 
     useEffect(() => {
+        const q = query(collection(db, "scores"), limit(10))
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const dataSnapshot = snapshot.docs.map((doc) => ({
+                id: doc.id, ...doc.data(),
+            }));
+
+            setScoresData(dataSnapshot);
+        })
+        return () => unsubscribe();
+    }, [])
+
+    useEffect(() => {
         if (data.length === 0) return;
 
         const runPythonCode = async () => {
@@ -41,7 +55,12 @@ export default function SimpleDashboard() {
                 setStatus('Loading Pyodide :)');
                 const pyodide = await getPyodide();
 
-                window.__pyodideData = JSON.stringify(data);
+                const payload = {
+                    users: data,
+                    scores: scoresData
+                };
+
+                window.__pyodideData = JSON.stringify(payload);
 
                 setStatus('Running Python :(');
                 await pyodide.runPythonAsync(PLOT_PY);
