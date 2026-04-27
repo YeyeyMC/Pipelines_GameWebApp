@@ -1,4 +1,4 @@
-# PG29 - Yeison Munoz - Cloud Computing - Assignment 1 - Game Portal
+# PG29 - Yeison Munoz - Cloud Computing - Assignment 1 - Game Portal (Go down for A2 Section)
 
 ## Description
 This project is based on using Firebase Authentication and Firestore to store data for each player. Also the page contains a window for playing Sponder Bird game, which will be used for data analysis purposes.
@@ -36,7 +36,38 @@ Here is the content of the JSON. Make sure you put it in the project folder (Sam
 - Password: 123456
 
 ### PLayer: 
-- Email: diana8@gmail.com
+- Email: diana8@gmail.com, diana6@gmail.com, diana9@gmail.com
+- Password: 123456
+
+### Sponder Bird game
+GitHub Repo: https://github.com/YeyeyMC/Pipelines_SponderBird.git
+
+
+# PG29 - Yeison Munoz - Cloud Computing - Assignment 2 - Telemetry System
+
+This assignment implements additional features to connect the Sponder Bird Game with the actual React project, making the systems connected to transfer data.
+
+Changes:
+- Payload to Firestore: I added additional information from Unity C# to jslib to Firestore
+  - startTimestamp
+  - endTimestamp
+  - clicks amount
+- SampleDashboard:
+  - Shows the graphs made in python from the data saved in Firestore
+  - It shows data from "users" collection and from "scores" collection
+- Graphs:
+  - Player Scores (Bar Chart)
+  - Games played per Player (Bar Chart)
+  - Score Timeline (Line Chart)
+  - Clicks vs Score (Scatter Plot)
+
+## Default Accounts for testing
+### Admin: 
+- Email: diana5@gmail.com
+- Password: 123456
+
+### Player: 
+- Email: diana8@gmail.com, diana6@gmail.com, diana9@gmail.com
 - Password: 123456
 
 ### Sponder Bird game
