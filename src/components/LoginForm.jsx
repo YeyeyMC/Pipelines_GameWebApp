@@ -59,7 +59,7 @@ export default function LoginForm() {
     return (
         <div className="login-container">
             <div className="login-card">
-                <h1>NotBeetleball</h1>
+                <h1>Sponder Bird Game</h1>
                 <p>Sign in</p>
                 <form className="login-form" onSubmit={handleEmailAuth}>
                     <div className="field-group">
